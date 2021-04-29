@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "208757727037",
+    "firebase_url": "https://smarthome-9998-default-rtdb.firebaseio.com",
+    "project_id": "smarthome-9998",
+    "storage_bucket": "smarthome-9998.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208757727037:android:a4eefd261614bd038d6f54",
+        "android_client_info": {
+          "package_name": "com.jaykit.blvck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208757727037-iptncvd50r47g68mp7s7shilsvd2b5pg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOn9tssr8MB6kub2FdVc3Fgm18zIrtcv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208757727037-iptncvd50r47g68mp7s7shilsvd2b5pg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208757727037:android:bb924e6d69019f8e8d6f54",
+        "android_client_info": {
+          "package_name": "com.jaykit.minimal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208757727037-iptncvd50r47g68mp7s7shilsvd2b5pg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOn9tssr8MB6kub2FdVc3Fgm18zIrtcv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208757727037-iptncvd50r47g68mp7s7shilsvd2b5pg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
