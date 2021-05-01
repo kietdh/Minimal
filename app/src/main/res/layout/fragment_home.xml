@@ -4,31 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_background"
     tools:context=".ui.home.HomeFragment">
 
     <TextView
         android:id="@+id/txtWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginStart="40dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="@string/welcome"
         android:textSize="23dp"
+        app:layout_constraintBottom_toTopOf="@+id/weatherCard"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.717" />
 
     <TextView
         android:id="@+id/txtUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/montserrat_semi_bold"
         android:text="@string/default_name"
         android:textSize="23dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/txtWelcome"
-        app:layout_constraintStart_toEndOf="@+id/txtWelcome" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txtWelcome"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/weatherCard"
+        android:layout_width="170dp"
+        android:layout_height="237dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="112dp"
+        android:backgroundTint="@color/light_card"
+        android:fadingEdgeLength="5dp"
+        android:padding="0dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="116dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="112dp"
+        android:fadingEdgeLength="5dp"
+        android:padding="0dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
+        app:layout_constraintStart_toEndOf="@+id/weatherCard"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView_2"
+        android:layout_width="116dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="22dp"
+        android:fadingEdgeLength="5dp"
+        android:padding="0dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
+        app:layout_constraintStart_toEndOf="@+id/weatherCard"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView_3"
+        android:layout_width="116dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="22dp"
+        android:fadingEdgeLength="5dp"
+        android:padding="0dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp"
+        app:layout_constraintStart_toEndOf="@+id/weatherCard"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView_2">
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

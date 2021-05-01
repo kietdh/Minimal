@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- This colors used for Light mode -->
+    <color name="light_background">#FFFFFF</color>
+    <color name="light_card">#FEFEFE</color>
+    <color name="light_button">#F6C90E</color>
+    <color name="light_content">#3A4750</color>
+    <color name="light_heading">#303841</color>
+
+    <!-- This colors used for Dark mode -->
+    <color name="background">#323140</color>
+    <color name="dark_card">#383749</color>
+    <color name="dark_heading">#D7D7DB</color>
+    <color name="dark_content">#5A596D</color>
+    <color name="dark_button">#3ADA99</color>
 </resources>
