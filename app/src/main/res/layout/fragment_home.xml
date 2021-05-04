@@ -11,8 +11,8 @@
         android:id="@+id/txtWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/montserrat_regular"
         android:text="@string/welcome"
         android:textSize="23dp"
@@ -23,20 +23,22 @@
         android:id="@+id/txtUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="148dp"
         android:fontFamily="@font/montserrat_semi_bold"
         android:text="@string/default_name"
         android:textSize="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/txtWelcome"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/weatherCard"
         android:layout_width="170dp"
-        android:layout_height="237dp"
+        android:layout_height="236dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/light_card"
         android:fadingEdgeLength="5dp"
         android:padding="0dp"
@@ -44,81 +46,6 @@
         app:cardElevation="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtWelcome">
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="116dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="108dp"
-        android:fadingEdgeLength="5dp"
-        android:padding="0dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp"
-        app:layout_constraintStart_toEndOf="@+id/weatherCard"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView_2"
-        android:layout_width="116dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="22dp"
-        android:fadingEdgeLength="5dp"
-        android:padding="0dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp"
-        app:layout_constraintStart_toEndOf="@+id/weatherCard"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView">
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView_3"
-        android:layout_width="116dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="22dp"
-        android:fadingEdgeLength="5dp"
-        android:padding="0dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp"
-        app:layout_constraintStart_toEndOf="@+id/weatherCard"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView_2">
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView_4"
-        android:layout_width="326dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="32dp"
-        android:padding="0dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weatherCard">
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView_5"
-        android:layout_width="331dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="32dp"
-        android:padding="0dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView_4">
 
     </com.google.android.material.card.MaterialCardView>
 

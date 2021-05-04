@@ -33,4 +33,9 @@
     <!-- This string used for UI Home -->
     <string name="welcome">Welcome, </string>
     <string name="default_name">Guest!</string>
+
+    <!-- This string used for Fragment title -->
+    <string name="dashboard">Dashboard</string>
+    <string name="notifications">Notifications</string>
+    <string name="user">User</string>
 </resources>
