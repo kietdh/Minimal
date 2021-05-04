@@ -17,6 +17,7 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Sensors widget -->>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView3"
@@ -31,6 +32,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/thermometer"
+                    android:layout_marginStart="5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/humidity"
+                    android:layout_marginStart="5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/fire"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -53,7 +94,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView"
+                android:id="@+id/btnDevice_1"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -66,11 +107,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="15dp"
+                    android:src="@drawable/light_bulb" />
+
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView16"
+                android:id="@+id/btnDevice_2"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="15dp"
@@ -80,14 +127,20 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_1"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/top_light"
+                    android:layout_margin="15dp"/>
 
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView17"
+                android:id="@+id/btnDevice_3"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="15dp"
@@ -97,14 +150,20 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView16"
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_2"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/light"
+                    android:layout_margin="15dp"/>
 
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView21"
+                android:id="@+id/btnDevice_4"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="15dp"
@@ -114,13 +173,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView17"
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_3"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/top_light_bulb"
+                    android:layout_margin="15dp"/>
+
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView18"
+                android:id="@+id/btnDevice_5"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -131,12 +196,18 @@
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_1">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/fan"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView19"
+                android:id="@+id/btnDevice_6"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="12dp"
@@ -146,13 +217,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView18"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView16">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_5"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_2">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/top_fan"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView20"
+                android:id="@+id/btnDevice_7"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -162,13 +239,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView19"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView17">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_6"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_3">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/air_conditioner"
+                    android:layout_margin="15dp" />
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView24"
+                android:id="@+id/btnDevice_8"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -178,13 +261,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView20"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView21">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_7"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_4">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/outlet"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView22"
+                android:id="@+id/btnDevice_9"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -195,12 +284,18 @@
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView18">
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_5">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView23"
+                android:id="@+id/btnDevice_10"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="12dp"
@@ -210,13 +305,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView22"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView19">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_9"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_6">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView25"
+                android:id="@+id/btnDevice_11"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -226,13 +327,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView23"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView20">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_10"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_7">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView28"
+                android:id="@+id/btnDevice_12"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -242,13 +349,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView25"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView24">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_11"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_8">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView26"
+                android:id="@+id/btnDevice_13"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -259,12 +372,18 @@
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView22">
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_9">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView27"
+                android:id="@+id/btnDevice_14"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="12dp"
@@ -274,13 +393,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView26"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView23">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_13"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_10">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView29"
+                android:id="@+id/btnDevice_15"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -290,12 +415,19 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView27"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView25">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_14"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_11">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnDevice_16"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
@@ -305,12 +437,16 @@
                 android:padding="0dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView29"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView28">
+                app:layout_constraintStart_toEndOf="@+id/btnDevice_15"
+                app:layout_constraintTop_toBottomOf="@+id/btnDevice_12">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/add"
+                    android:layout_margin="15dp"/>
 
             </com.google.android.material.card.MaterialCardView>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

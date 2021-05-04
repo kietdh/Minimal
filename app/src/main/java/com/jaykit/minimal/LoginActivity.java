@@ -94,9 +94,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void openSignUpActivity() {
+        startActivity(new Intent(this, SignUpActivity.class));
     }
 
     private void openForgotPasswordActivity() {
+        startActivity(new Intent(this, ForgotPasswordActivity.class));
     }
 
     private void openMainActivity() {

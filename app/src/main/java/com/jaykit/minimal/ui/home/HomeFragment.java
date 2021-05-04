@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
         welcome = view.findViewById(R.id.txtWelcome);
         username = view.findViewById(R.id.txtUsername);
 
+        sharedPref = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
         return view;
     }
 
