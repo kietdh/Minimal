@@ -14,6 +14,7 @@
     <color name="light_button">#F6C90E</color>
     <color name="light_content">#3A4750</color>
     <color name="light_heading">#303841</color>
+    <color name="light_card_on">#ccff90</color>
 
     <!-- This colors used for Dark mode -->
     <color name="background">#323140</color>
