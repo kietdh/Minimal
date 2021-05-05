@@ -218,14 +218,10 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
     public void onClick(View view) {
         switch ( view.getId() ) {
             case R.id.btnDevice_1:
-                if (light_bulb == 0) {
+                if (light_bulb == 0)
                     mDeviceReference.child("light_bulb").setValue(VALUE_ON);
-                    //btnDevice_1.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-                }
-                else {
+                else
                     mDeviceReference.child("light_bulb").setValue(VALUE_OFF);
-                    //btnDevice_1.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-                }
                 break;
             case R.id.btnDevice_2:
                 if (top_light == 0)
@@ -318,28 +314,45 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                     mDeviceReference.child("device_8").setValue(VALUE_OFF);
                 break;
 
-
         }
 
     }
 
     public void checkButtonState() {
-        if ( light_bulb == 1 )      btnDevice_1.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( top_light == 1 )       btnDevice_2.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( light == 1)            btnDevice_3.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( top_light_bulb == 1 )  btnDevice_4.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( fan == 1 )             btnDevice_5.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( top_fan == 1)          btnDevice_6.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( air_conditioner == 1)  btnDevice_7.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
-        if ( outlet == 1)           btnDevice_8.setCardBackgroundColor(getResources().getColor(R.color.light_card_on));
+        if ( getActivity() != null ) {
+            if (light_bulb == 1)
+                btnDevice_1.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (top_light == 1)
+                btnDevice_2.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (light == 1)
+                btnDevice_3.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (top_light_bulb == 1)
+                btnDevice_4.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (fan == 1)
+                btnDevice_5.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (top_fan == 1)
+                btnDevice_6.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (air_conditioner == 1)
+                btnDevice_7.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (outlet == 1)
+                btnDevice_8.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
 
-        if ( light_bulb == 0 )      btnDevice_1.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( top_light == 0 )       btnDevice_2.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( light == 0 )            btnDevice_3.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( top_light_bulb == 0 )  btnDevice_4.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( fan == 0 )             btnDevice_5.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( top_fan == 0 )          btnDevice_6.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( air_conditioner == 0 )  btnDevice_7.setCardBackgroundColor(getResources().getColor(R.color.light_card));
-        if ( outlet == 0 )           btnDevice_8.setCardBackgroundColor(getResources().getColor(R.color.light_card));
+            if (light_bulb == 0)
+                btnDevice_1.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (top_light == 0)
+                btnDevice_2.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (light == 0)
+                btnDevice_3.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (top_light_bulb == 0)
+                btnDevice_4.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (fan == 0)
+                btnDevice_5.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (top_fan == 0)
+                btnDevice_6.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (air_conditioner == 0)
+                btnDevice_7.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (outlet == 0)
+                btnDevice_8.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+        }
     }
 }

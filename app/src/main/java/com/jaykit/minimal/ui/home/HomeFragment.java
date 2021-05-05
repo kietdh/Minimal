@@ -2,6 +2,7 @@ package com.jaykit.minimal.ui.home;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jaykit.minimal.LoginActivity;
 import com.jaykit.minimal.R;
 
 import java.util.Calendar;
@@ -117,23 +119,30 @@ public class HomeFragment extends Fragment {
 
 
     private void setUsername() {
+
         user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        if (user == null ) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
+        else {
+            String uid = user.getUid();
+            databaseReference = FirebaseDatabase.getInstance().getReference();
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String user_name = snapshot.child("User").child(uid).child("name").getValue(String.class);
-                username.setText(user_name);
-            }
+            databaseReference.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("ERROR: ", "Cannot get data from real time database.");
-            }
-        });
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String user_name = snapshot.child("User").child(uid).child("name").getValue(String.class);
+                    username.setText(user_name);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("ERROR: ", "Cannot get data from real time database.");
+                }
+            });
+        }
     }
 
     private void setWelcomeTitle() {

@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,8 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
 
     //Declare SharedPreferences.
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor editor;
+    //SharedPreferences sharedPref;
+    //SharedPreferences.Editor editor;
 
     //Declare Palette.
     private TextView    forgotPasswordButton;
@@ -48,14 +50,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_login);
         //Initialization SharedPreferences.
-        sharedPref = getSharedPreferences("Login", Context.MODE_PRIVATE);
-        if ( sharedPref.getBoolean("Login", false) ) {
-            startActivity ( new Intent(this, MainActivity.class) );
-            finish();
-        }
+//        sharedPref = getSharedPreferences("Login", Context.MODE_PRIVATE);
+//        if ( sharedPref.getBoolean("Login", true) ) {
+//            finish();
+//            startActivity ( new Intent(this, MainActivity.class) );
+//        }
 
         //Initialization Firebase Auth.
         mAuth = FirebaseAuth.getInstance();
@@ -122,8 +126,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if( task.isSuccessful() ) {
-                            startActivity( new Intent(LoginActivity.this, MainActivity.class) );
-                            sharedPref.edit().putBoolean("Login", true).apply();
+                            //startActivity( new Intent(LoginActivity.this, MainActivity.class) );
+                            //sharedPref.edit().putBoolean("Login", true).apply();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         }
                         else {

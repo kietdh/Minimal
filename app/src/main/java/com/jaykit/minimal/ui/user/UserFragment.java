@@ -17,12 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.jaykit.minimal.LoginActivity;
 import com.jaykit.minimal.R;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
-
-    SharedPreferences sharedPref;
 
     private UserViewModel mViewModel;
 
@@ -36,10 +35,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        //mAuth = FirebaseAuth.getInstance();
         view = inflater.inflate(R.layout.fragment_user, container, false);
         btnLogout = view.findViewById(R.id.btnLogout);
-        sharedPref = getContext().getSharedPreferences("Login", getContext().MODE_PRIVATE);
 
         return view;
     }
@@ -67,8 +64,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void logout() {
-        sharedPref.edit().putBoolean("Login", false).apply();
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+
+
     }
 }
