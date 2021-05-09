@@ -36,6 +36,11 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
     private static final int VALUE_ON = 1;
     private static final int VALUE_OFF = 0;
 
+    private static final String HOME_CHILD = "Home";
+    private static final String MAC_CHILD = "24:62:AB:F9:22:0C";
+    private static final String DEVICE_CHILD = "Device";
+    private static final String SENSOR_CHILD = "Sensor";
+
 
     //Declare Palette.
     private MaterialCardView btnDevice_1;
@@ -58,6 +63,8 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
     private TextView txtTemperature;
     private TextView txtHumidity;
     private TextView txtGas;
+    private TextView txtTemperatureFeel;
+    private TextView txtHumidityFeel;
 
     //Declare number of status of devices.
     int light_bulb;
@@ -81,14 +88,16 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
     String temperature;
     String humidity;
     int    gas;
+    int    tempInt;
+    int    humInt;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         mDatabase = FirebaseDatabase.getInstance();
         mRootReference = mDatabase.getReference();
-        mDeviceReference = mRootReference.child("Home").child("24:62:AB:F9:22:0C").child("Device");
-        mSensorReference = mRootReference.child("Home").child("24:62:AB:F9:22:0C").child("Sensor").child("test_sensor");
+        mDeviceReference = mRootReference.child(HOME_CHILD).child(MAC_CHILD).child(DEVICE_CHILD);
+        mSensorReference = mRootReference.child(HOME_CHILD).child(MAC_CHILD).child(SENSOR_CHILD).child("test_sensor");
 
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
@@ -112,6 +121,8 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
         txtTemperature = view.findViewById(R.id.txtTemperature);
         txtHumidity    = view.findViewById(R.id.txtHumidity);
         txtGas         = view.findViewById(R.id.txtGas);
+        txtTemperatureFeel  = view.findViewById(R.id.txtTemperatureFeel);
+        txtHumidityFeel     = view.findViewById(R.id.txtHumidityFeel);
 
         return view;
     }
@@ -131,14 +142,38 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                 temperature = index_temperature;
                 humidity    = index_humidity;
                 gas         = Integer.parseInt(index_gas);
+                tempInt     = Integer.parseInt(index_temperature);
+                humInt      = Integer.parseInt(index_humidity);
 
                 txtTemperature.setText(temperature);
                 txtHumidity.setText(humidity);
 
-                if ( gas == 1 )
+                if ( gas == 1 ) {
                     txtGas.setText("warning, gas detect");
-                else
+                }
+                else {
                     txtGas.setText("no gas detect, all safe");
+                }
+
+                if ( tempInt < 0 )
+                    txtTemperatureFeel.setText("freeze, play with snow");
+                else if (tempInt >= 0 && tempInt <= 20 )
+                    txtTemperatureFeel.setText("cold, best time to sleep");
+                else if ( tempInt > 20 && tempInt <= 26 )
+                    txtTemperatureFeel.setText("comfort life, need party!");
+                else if ( tempInt > 26 && tempInt <= 32 )
+                    txtTemperatureFeel.setText("time to read a book");
+                else if ( tempInt > 32 )
+                    txtTemperatureFeel.setText("too hot, pool party is ready!");
+
+                if ( humInt < 40 )
+                    txtHumidityFeel.setText("the air humidity is too low");
+                else if ( humInt >= 40 && humInt <= 70 )
+                    txtHumidityFeel.setText("ideal humidity");
+                else if ( humInt > 70 )
+                    txtHumidityFeel.setText("the air humidity is too high");
+
+
             }
 
             @Override
@@ -211,6 +246,12 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
         btnDevice_14.setOnClickListener(this);
         btnDevice_15.setOnClickListener(this);
         btnDevice_16.setOnClickListener(this);
+
+        setFeelLikeText();
+
+    }
+
+    private void setFeelLikeText() {
 
     }
 
@@ -336,6 +377,22 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                 btnDevice_7.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
             if (outlet == 1)
                 btnDevice_8.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_1 == 1)
+                btnDevice_9.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_2 == 1)
+                btnDevice_10.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_3 == 1)
+                btnDevice_11.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_4 == 1)
+                btnDevice_12.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_5 == 1)
+                btnDevice_13.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_6 == 1)
+                btnDevice_14.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_7 == 1)
+                btnDevice_15.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
+            if (device_8 == 1)
+                btnDevice_16.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card_on));
 
             if (light_bulb == 0)
                 btnDevice_1.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
@@ -353,6 +410,22 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                 btnDevice_7.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
             if (outlet == 0)
                 btnDevice_8.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_1 == 0)
+                btnDevice_9.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_2 == 0)
+                btnDevice_10.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_3 == 0)
+                btnDevice_11.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_4 == 0)
+                btnDevice_12.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_5 == 0)
+                btnDevice_13.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_6 == 0)
+                btnDevice_14.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_7 == 0)
+                btnDevice_15.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
+            if (device_8 == 0)
+                btnDevice_16.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
         }
     }
 }

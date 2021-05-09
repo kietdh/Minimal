@@ -11,21 +11,35 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jaykit.minimal.LoginActivity;
 import com.jaykit.minimal.R;
+
+import org.jetbrains.annotations.NotNull;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
     private UserViewModel mViewModel;
+    FirebaseUser user;
+    DatabaseReference databaseReference;
 
-    ImageView btnLogout;
+    ImageView   btnLogout;
+    TextView    txtName;
+    TextView    txtEmail;
+    TextView   btnChangePwd;
     View view;
 
     public static UserFragment newInstance() {
@@ -36,7 +50,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user, container, false);
-        btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout   = view.findViewById(R.id.btnLogout);
+        txtName     = view.findViewById(R.id.txtName);
+        txtEmail    = view.findViewById(R.id.txtEmail);
+        btnChangePwd = view.findViewById(R.id.btnChangePwd);
 
         return view;
     }
@@ -45,6 +62,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         btnLogout.setOnClickListener(this);
+        btnChangePwd.setOnClickListener(this);
+        setUsername();
+        setEmail();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -60,6 +80,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         switch ( view.getId() ) {
             case R.id.btnLogout:
                 logout();
+                break;
+            case R.id.btnChangePwd:
+                changePassword();
+                break;
         }
     }
 
@@ -70,5 +94,60 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         startActivity(intent);
 
 
+    }
+
+    private void changePassword() {
+        //Write change password method, maybe need to create popup window for this method.
+    }
+
+    private void setUsername() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null ) {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        }
+        else {
+            String uid = user.getUid();
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String user_name = snapshot.child("User").child(uid).child("name").getValue(String.class);
+                    txtName.setText(user_name);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("ERROR: ", "Cannot get data from real time database.");
+                }
+            });
+        }
+    }
+
+    private void setEmail() {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if ( user == null )
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        else {
+            String uid = user.getUid();
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    String email = snapshot.child("User").child(uid).child("email").getValue(String.class);
+                    txtEmail.setText(email);
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                    Log.d("ERROR: ", "Cannot get data from real time database.");
+                }
+            });
+        }
     }
 }

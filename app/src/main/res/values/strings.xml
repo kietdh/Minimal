@@ -38,6 +38,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="notifications">Notifications</string>
     <string name="user">User</string>
+
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -46,4 +47,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <!-- This string used for User Fragment  -->
+    <string name="email">email: </string>
+    <string name="name">name</string>
+    <string name="password">Password: </string>
+    <string name="username_example">example@email.com</string>
+    <string name="password_example">********</string>
+    <string name="change_pwd">change password</string>
+    <string name="text">something text in here</string>
+
+    <!-- splash content -->
+    <string name="splash">jaykit</string>
 </resources>
