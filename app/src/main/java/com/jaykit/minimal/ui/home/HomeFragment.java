@@ -1,23 +1,17 @@
 package com.jaykit.minimal.ui.home;
 
-import android.Manifest;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,33 +25,48 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jaykit.minimal.LoginActivity;
 import com.jaykit.minimal.R;
-
+import com.jaykit.minimal.api.Darksky;
+import com.jaykit.minimal.api.Forecast;
+import com.jaykit.minimal.api.GPSTracker;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
+import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment {
+
+    GPSTracker gps;
+    Darksky darksky;
+    Forecast currentlyForecast;
 
     private HomeViewModel homeViewModel;
     private FirebaseAuth mAuth;
     FirebaseUser user;
     DatabaseReference databaseReference;
-    SharedPreferences sharedPref;
+    //SharedPreferences sharedPref;
 
     //Declare Palette.
     View view;
     TextView username;
     TextView welcome;
-
-    //Declare location variables.
-    double longitude;
-    double latitude;
+    TextView txtTemperature;
+    TextView txtHumidity;
+    TextView txtUVIndex;
+    TextView txtWindSpeed;
+    TextView txtTimeZone;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         view = inflater.inflate(R.layout.fragment_home, container, false);
         welcome = view.findViewById(R.id.txtWelcome);
         username = view.findViewById(R.id.txtUsername);
-
-        sharedPref = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
+        txtTemperature = view.findViewById(R.id.txtTemperature);
+        txtHumidity = view.findViewById(R.id.txtHumidity);
+        txtUVIndex = view.findViewById(R.id.txtUVIndex);
+        txtWindSpeed = view.findViewById(R.id.txtWindSpeed);
+        txtTimeZone = view.findViewById(R.id.txtTimeZone);
         return view;
     }
 
@@ -67,56 +76,13 @@ public class HomeFragment extends Fragment {
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                //
-            }
+            public void onChanged(@Nullable String s) { }
         });
 
         setWelcomeTitle();
         setUsername();
-        getLocationLongitudeLatitude();
+        getForecast();
     }
-
-    private void getLocationLongitudeLatitude() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //  Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = location.getLongitude();
-        latitude  = location.getLatitude();
-    }
-
-    private final LocationListener locationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-
-        }
-
-    };
-
 
     private void setUsername() {
 
@@ -145,6 +111,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void setWelcomeTitle() {
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
@@ -156,4 +123,58 @@ public class HomeFragment extends Fragment {
             welcome.setText("Good night, ");
         }
     }
+
+    private void getForecast() {
+        gps = new GPSTracker(getContext());
+
+        double latitude = gps.getLatitude();
+        double longitude = gps.getLongitude();
+
+        if (!gps.canGetLocation()) {
+            Toast.makeText(getContext(), "Unable to get location", Toast.LENGTH_LONG).show();
+        }
+        darksky = new Darksky(latitude, longitude);
+
+        AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody, StandardCharsets.UTF_8);
+                try {
+                    JSONObject root = new JSONObject(response);
+                    JSONObject currently = root.getJSONObject("currently");
+
+                    String child = root.getString("timezone");
+                    currentlyForecast = new Forecast (
+                            currently.getInt("time"),
+                            currently.getString("summary"),
+                            currently.getString("icon"),
+                            currently.getInt("uvIndex"),
+                            currently.getDouble("temperature"),
+                            currently.getDouble("humidity"),
+                            currently.getDouble("windSpeed")
+                    );
+
+                    int temperature = (int) ((currentlyForecast.getTemperature() - 32) * 0.5556);
+                    int humidity = (int) (currentlyForecast.getHumidity() * 100);
+                    int wind_speed = (int) (currentlyForecast.getWindSpeed());
+
+                    txtTemperature.setText(String.valueOf(temperature));
+                    txtHumidity.setText(String.valueOf(humidity));
+                    txtUVIndex.setText(String.valueOf(currentlyForecast.getUvIndex()));
+                    txtWindSpeed.setText(String.valueOf(wind_speed));
+                    txtTimeZone.setText(child);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.e("ERROR: ", "LOI KHONG THE GET API");
+            }
+        };
+        darksky.getCurrentForecast(handler);
+    }
+
+
 }

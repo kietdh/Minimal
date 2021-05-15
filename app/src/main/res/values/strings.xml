@@ -8,6 +8,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="sample">tested</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
@@ -20,6 +21,12 @@
     <string name="hint_password_login">type your password</string>
     <string name="text_button_forgot_password">Forgot password?</string>
     <string name="text_button_sign_up">Sign up</string>
+    <string name="percent">%</string>
+    <string name="windspeed">wind speed: </string>
+    <string name="timezone">time zone: </string>
+    <string name="temperature">temperature: </string>
+    <string name="humidity">humidity: </string>
+    <string name="uvindex">UV Index: </string>
 
     <!-- This string used for UI Sign Up -->
     <string name="hint_sign_up_name">type your first name</string>
@@ -30,9 +37,12 @@
     <!-- This string used for UI Forgot Password -->
     <string name="hint_email_forgot_password">type your email</string>
 
-    <!-- This string used for UI Home -->
+    <!-- This string used for Fragment Home -->
     <string name="welcome">Welcome, </string>
     <string name="default_name">Guest!</string>
+    <string name="good_morning">Good morning, </string>
+    <string name="good_afternoon">Good afternoon, </string>
+    <string name="good_night">Good night, </string>
 
     <!-- This string used for Fragment title -->
     <string name="dashboard">Dashboard</string>

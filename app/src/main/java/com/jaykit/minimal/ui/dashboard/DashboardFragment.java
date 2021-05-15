@@ -1,6 +1,6 @@
 package com.jaykit.minimal.ui.dashboard;
 
-import android.graphics.Color;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.card.MaterialCardView;
@@ -18,12 +17,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.jaykit.minimal.R;
-import com.jaykit.minimal.model.Device;
 
-import java.util.HashMap;
 
 public class DashboardFragment extends Fragment  implements View.OnClickListener {
 
@@ -88,8 +84,8 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
     String temperature;
     String humidity;
     int    gas;
-    int    tempInt;
-    int    humInt;
+    float  tempFloat;
+    float  humFloat;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,7 +93,7 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
         mDatabase = FirebaseDatabase.getInstance();
         mRootReference = mDatabase.getReference();
         mDeviceReference = mRootReference.child(HOME_CHILD).child(MAC_CHILD).child(DEVICE_CHILD);
-        mSensorReference = mRootReference.child(HOME_CHILD).child(MAC_CHILD).child(SENSOR_CHILD).child("test_sensor");
+        mSensorReference = mRootReference.child(HOME_CHILD).child(MAC_CHILD).child(SENSOR_CHILD);
 
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
@@ -133,6 +129,7 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
 
         mSensorReference.addValueEventListener(new ValueEventListener() {
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String index_temperature = snapshot.child("temperature").getValue().toString();
@@ -142,35 +139,35 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                 temperature = index_temperature;
                 humidity    = index_humidity;
                 gas         = Integer.parseInt(index_gas);
-                tempInt     = Integer.parseInt(index_temperature);
-                humInt      = Integer.parseInt(index_humidity);
+                tempFloat   = Float.parseFloat(index_temperature);
+                humFloat    = Float.parseFloat(index_humidity);
 
                 txtTemperature.setText(temperature);
                 txtHumidity.setText(humidity);
 
-                if ( gas == 1 ) {
+                if ( gas == 0 ) {
                     txtGas.setText("warning, gas detect");
                 }
                 else {
                     txtGas.setText("no gas detect, all safe");
                 }
 
-                if ( tempInt < 0 )
+                if ( tempFloat < 0 )
                     txtTemperatureFeel.setText("freeze, play with snow");
-                else if (tempInt >= 0 && tempInt <= 20 )
+                else if (tempFloat >= 0 && tempFloat <= 20 )
                     txtTemperatureFeel.setText("cold, best time to sleep");
-                else if ( tempInt > 20 && tempInt <= 26 )
+                else if ( tempFloat > 20 && tempFloat <= 26 )
                     txtTemperatureFeel.setText("comfort life, need party!");
-                else if ( tempInt > 26 && tempInt <= 32 )
+                else if ( tempFloat > 26 && tempFloat <= 32 )
                     txtTemperatureFeel.setText("time to read a book");
-                else if ( tempInt > 32 )
+                else if ( tempFloat > 32 )
                     txtTemperatureFeel.setText("too hot, pool party is ready!");
 
-                if ( humInt < 40 )
+                if ( humFloat < 40 )
                     txtHumidityFeel.setText("the air humidity is too low");
-                else if ( humInt >= 40 && humInt <= 70 )
+                else if ( humFloat >= 40 && humFloat <= 70 )
                     txtHumidityFeel.setText("ideal humidity");
-                else if ( humInt > 70 )
+                else if ( humFloat > 70 )
                     txtHumidityFeel.setText("the air humidity is too high");
 
 
