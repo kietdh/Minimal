@@ -12,10 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,10 +28,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jaykit.minimal.ChangePassword;
 import com.jaykit.minimal.LoginActivity;
 import com.jaykit.minimal.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
@@ -82,7 +89,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 logout();
                 break;
             case R.id.btnChangePwd:
-                changePassword();
+                changePassword(view);
                 break;
         }
     }
@@ -96,8 +103,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void changePassword() {
-        //Write change password method, maybe need to create popup window for this method.
+    private void changePassword(View view) {
+        startActivity( new Intent(getActivity(), ChangePassword.class));
     }
 
     private void setUsername() {

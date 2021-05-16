@@ -3,6 +3,7 @@ package com.jaykit.minimal;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -31,9 +32,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     //Declare Firebase Auth.
     private FirebaseAuth mAuth;
 
-    //Declare Palette.
-    private EditText    email;
-    private ImageView   buttonForgotPassword;
+    EditText edtEmail;
+    ImageView btnForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +46,31 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         //Initialization Firebase Auth.
         mAuth = FirebaseAuth.getInstance();
 
-        //SubFunction.
-        onView();
+        edtEmail = findViewById(R.id.edtForgotEmail);
+        btnForgotPassword = findViewById(R.id.imageViewForgetPassword);
+
+        btnForgotPassword.setOnClickListener(this);
     }
 
-    private void onView() {
-        email = findViewById(R.id.edtForgotEmail);
-        buttonForgotPassword = findViewById(R.id.imageViewForgetPassword);
-    }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
-        String uemail = email.getText().toString().trim();
+        String email = edtEmail.getText().toString().trim();
 
-        if ( uemail.isEmpty() ) {
-            email.setText("Email is required.");
-            email.requestFocus();
+        if ( email.isEmpty() ) {
+            edtEmail.setError("Email is required.");
+            edtEmail.requestFocus();
             return;
         }
 
-        if( !Patterns.EMAIL_ADDRESS.matcher(uemail).matches() ) {
-            email.setError("Please provide valid email.");
-            email.requestFocus();
+        if( !Patterns.EMAIL_ADDRESS.matcher(email).matches() ) {
+            edtEmail.setError("Please provide valid email.");
+            edtEmail.requestFocus();
             return;
         }
 
-        mAuth.sendPasswordResetEmail(uemail).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+        mAuth.sendPasswordResetEmail(edtEmail.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<Void>() {
 
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -81,7 +80,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 }
                 else {
                     Toast.makeText(ForgotPasswordActivity.this, "Failed to reset password!", Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
         });

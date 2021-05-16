@@ -1,7 +1,10 @@
 package com.jaykit.minimal.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,10 +46,8 @@ public class HomeFragment extends Fragment {
     Forecast currentlyForecast;
 
     private HomeViewModel homeViewModel;
-    private FirebaseAuth mAuth;
     FirebaseUser user;
     DatabaseReference databaseReference;
-    //SharedPreferences sharedPref;
 
     //Declare Palette.
     View view;
@@ -80,35 +82,33 @@ public class HomeFragment extends Fragment {
         });
 
         setWelcomeTitle();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         setUsername();
         getForecast();
     }
 
     private void setUsername() {
-
         user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if (user == null ) {
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-        }
-        else {
-            String uid = user.getUid();
-            databaseReference = FirebaseDatabase.getInstance().getReference();
+        String uid = user.getUid();
 
-            databaseReference.addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String user_name = snapshot.child("User").child(uid).child("name").getValue(String.class);
-                    username.setText(user_name);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("ERROR: ", "Cannot get data from real time database.");
-                }
-            });
-        }
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = snapshot.child("User").child(uid).child("name").getValue(String.class);
+                username.setText(name);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("ERROR: ", "Cannot get data from real time database.");
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")

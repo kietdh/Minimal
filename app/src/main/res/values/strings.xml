@@ -8,12 +8,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="sample">tested</string>
+    <string name="sample">kk</string>
+    <string name="darksky">Powered by Dark Sky</string>
+    <string name="changepwd">Change Password</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+
+    <!-- This string used for notification -->
+    <string name="channel">31</string>
+    <string name="description">notification</string>
 
     <!-- This string is used for UI Login -->
     <string name="slogan">minimal thing make life simpler</string>
@@ -66,6 +72,10 @@
     <string name="password_example">********</string>
     <string name="change_pwd">change password</string>
     <string name="text">something text in here</string>
+    <!-- This string used for change password Activity -->
+    <string name="old_password">type your old password</string>
+    <string name="new_password">type your new password</string>
+    <string name="verify_new_password">type your new password again</string>
 
     <!-- splash content -->
     <string name="splash">jaykit</string>

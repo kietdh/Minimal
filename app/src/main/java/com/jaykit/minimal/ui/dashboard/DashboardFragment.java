@@ -145,7 +145,7 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                 txtTemperature.setText(temperature);
                 txtHumidity.setText(humidity);
 
-                if ( gas == 0 ) {
+                if ( gas == 1 ) {
                     txtGas.setText("warning, gas detect");
                 }
                 else {
@@ -243,12 +243,6 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
         btnDevice_14.setOnClickListener(this);
         btnDevice_15.setOnClickListener(this);
         btnDevice_16.setOnClickListener(this);
-
-        setFeelLikeText();
-
-    }
-
-    private void setFeelLikeText() {
 
     }
 

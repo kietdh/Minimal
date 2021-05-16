@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,12 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //SharedPreferences sharedPref;
     //SharedPreferences.Editor editor;
 
-    //Declare Palette.
-    private TextView    forgotPasswordButton;
-    private TextView    signUpButton;
     private EditText    emailField;
     private EditText    passwordField;
-    private ImageView   loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +67,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void onView() {
-        signUpButton = findViewById(R.id.textViewSignUp);
-        forgotPasswordButton = findViewById(R.id.textViewForgotPassword);
+        //Declare Palette.
+        TextView forgotPasswordButton = findViewById(R.id.textViewForgotPassword);
         emailField = findViewById(R.id.edtLoginEmail);
         passwordField = findViewById(R.id.edtLoginPassword);
-        loginButton = findViewById(R.id.imageViewLogin);
+        ImageView loginButton = findViewById(R.id.imageViewLogin);
+        TextView signUpButton = findViewById(R.id.textViewSignUp);
 
         signUpButton.setOnClickListener(this);
         forgotPasswordButton.setOnClickListener(this);
@@ -82,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch ( view.getId() ) {
@@ -126,14 +125,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if( task.isSuccessful() ) {
-                            //startActivity( new Intent(LoginActivity.this, MainActivity.class) );
-                            //sharedPref.edit().putBoolean("Login", true).apply();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                         }
                         else {
                             Toast.makeText(LoginActivity.this, "Failed to login, please check login information!", Toast.LENGTH_LONG).show();
-                            return;
                         }
                     }
                 });

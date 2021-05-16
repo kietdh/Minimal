@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jaykit.minimal.model.User;
 
@@ -35,13 +36,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     //Declare Firebase Auth
     private FirebaseAuth mAuth;
+    private FirebaseDatabase mDatabase;
+    private FirebaseUser mUser;
 
-    //Declare Palette.
-    private EditText    name;
-    private EditText    email;
-    private EditText    password;
-    private EditText    re_password;
-    private ImageView   buttonSignUp;
+    EditText edtName;
+    EditText edtEmail;
+    EditText edtPassword;
+    EditText edtRePassword;
+    ImageView btnSignUp;
 
 
     @Override
@@ -54,85 +56,43 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         //Initialization Firebase Auth.
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
 
         //SubFunction.
         onView();
-
     }
 
     private void onView() {
-        name = findViewById(R.id.edtSignUpName);
-        email = findViewById(R.id.edtSignUpEmail);
-        password = findViewById(R.id.edtSignUpPassword);
-        re_password = findViewById(R.id.edtConfirmSignUpPassword);
-        buttonSignUp = findViewById(R.id.imageViewSignUpButton);
-
-        buttonSignUp.setOnClickListener(this);
+        //Declare Palette.
+        edtName = findViewById(R.id.edtSignUpName);
+        edtEmail = findViewById(R.id.edtSignUpEmail);
+        edtPassword = findViewById(R.id.edtSignUpPassword);
+        edtRePassword = findViewById(R.id.edtConfirmSignUpPassword);
+        btnSignUp = findViewById(R.id.imageViewSignUpButton);
+        btnSignUp.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if ( view.getId() == R.id.imageViewSignUpButton ) {
-            signUp();
+        if (view.getId() == R.id.imageViewSignUpButton) {
+            if (isValidSignupInfo()) {
+                signUp();
+            }
         }
     }
 
     private void signUp() {
-        String uname = name.getText().toString().trim();
-        String uemail = email.getText().toString().trim();
-        String upassword = password.getText().toString().trim();
-        String urepassword = re_password.getText().toString().trim();
+        String usr = edtEmail.getText().toString();
+        String pwd = edtRePassword.getText().toString();
+        String name = edtName.getText().toString();
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //Check empty fields.
-        if ( uname.isEmpty() ) {
-            name.setError("Name is required");
-            name.requestFocus();
-            return;
-        }
-
-        if ( uemail.isEmpty() ) {
-            email.setError("Email is required");
-            email.requestFocus();
-            return;
-        }
-
-        if ( upassword.isEmpty() ) {
-            password.setError("Password is required");
-            password.requestFocus();
-            return;
-        }
-
-        if ( urepassword.isEmpty() ) {
-            re_password.setError("Confirm password is required");
-            re_password.requestFocus();
-            return;
-        }
-
-        //Check valid contents.
-        if( !Patterns.EMAIL_ADDRESS.matcher(uemail).matches() ) {
-            email.setError("Please provide valid email.");
-            email.requestFocus();
-            return;
-        }
-
-        if ( !upassword.equals(urepassword) ) {
-            re_password.setError("Your confirm password does not match.");
-            re_password.requestFocus();
-            return;
-        }
-
-        mAuth.createUserWithEmailAndPassword(uemail, urepassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if ( task.isSuccessful() ) {
-                            User user = new User( uname, uemail, urepassword);
-
-                            FirebaseDatabase.getInstance().getReference("User")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void> () {
-
+        mAuth.createUserWithEmailAndPassword(usr, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if ( task.isSuccessful() ) {
+                    User user = new User(name, usr);
+                    FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void> () {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if ( task.isSuccessful() ) {
@@ -142,18 +102,48 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     }
                                     else {
                                         Toast.makeText(SignUpActivity.this, "Failed to sign up. Try again!", Toast.LENGTH_LONG).show();
-                                        password.setText("");
-                                        re_password.setText("");
-                                        return;
+                                        edtPassword.setText("");
+                                        edtRePassword.setText("");
                                     }
                                 }
                             });
                         }
                         else {
                             Toast.makeText(SignUpActivity.this, "Failed to sign up. Try again!", Toast.LENGTH_LONG).show();
-                            return;
                         }
                     }
                 });
     }
+
+
+
+    private boolean isValidSignupInfo() {
+        //Check empty fields.
+        if (edtName.getText().toString().isEmpty()) {
+            edtName.setError("Name is required");
+            edtName.requestFocus();
+        }
+        if (edtEmail.getText().toString().isEmpty()) {
+            edtEmail.setError("Email is required");
+            edtEmail.requestFocus();
+        }
+        if (edtPassword.getText().toString().isEmpty()) {
+            edtPassword.setError("Password is required");
+            edtPassword.requestFocus();
+        }
+        if (edtRePassword.getText().toString().isEmpty()) {
+            edtRePassword.setError("Confirm password is required");
+            edtRePassword.requestFocus();
+        }
+        //Check valid contents.
+        if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText()).matches()) {
+            edtEmail.setError("Please provide valid email.");
+            edtEmail.requestFocus();
+        }
+        if (!edtRePassword.getText().toString().equals(edtPassword.getText().toString())) {
+            edtRePassword.setError("Your confirm password does not match.");
+            edtRePassword.requestFocus();
+        }
+        return true;
+        }
 }
