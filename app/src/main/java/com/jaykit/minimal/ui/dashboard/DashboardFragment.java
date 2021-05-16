@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -147,6 +148,7 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
 
                 if ( gas == 1 ) {
                     txtGas.setText("warning, gas detect");
+                    checkGasAlert();
                 }
                 else {
                     txtGas.setText("no gas detect, all safe");
@@ -418,5 +420,12 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
             if (device_8 == 0)
                 btnDevice_16.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
         }
+    }
+    private void checkGasAlert() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
+                .setSmallIcon(R.drawable.fire)
+                .setContentTitle("Minimal")
+                .setContentText("SOS! Gas detected, check your home.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
     }
 }
