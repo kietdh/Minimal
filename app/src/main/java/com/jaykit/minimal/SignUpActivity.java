@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jaykit.minimal.model.User;
 
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,8 +36,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     //Declare Firebase Auth
     private FirebaseAuth mAuth;
-    private FirebaseDatabase mDatabase;
-    private FirebaseUser mUser;
 
     EditText edtName;
     EditText edtEmail;
@@ -56,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         //Initialization Firebase Auth.
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
 
         //SubFunction.
         onView();
@@ -85,32 +83,29 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String usr = edtEmail.getText().toString();
         String pwd = edtRePassword.getText().toString();
         String name = edtName.getText().toString();
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        mAuth.createUserWithEmailAndPassword(usr, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if ( task.isSuccessful() ) {
-                    User user = new User(name, usr);
-                    FirebaseDatabase.getInstance().getReference("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void> () {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if ( task.isSuccessful() ) {
-                                        Toast.makeText(SignUpActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                                        finish();
-                                    }
-                                    else {
-                                        Toast.makeText(SignUpActivity.this, "Failed to sign up. Try again!", Toast.LENGTH_LONG).show();
-                                        edtPassword.setText("");
-                                        edtRePassword.setText("");
-                                    }
+        mAuth.createUserWithEmailAndPassword(usr, pwd).addOnCompleteListener(task -> {
+            if ( task.isSuccessful() ) {
+                User user = new User(name, usr);
+                FirebaseDatabase.getInstance().getReference("User").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void> () {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if ( task.isSuccessful() ) {
+                                    Toast.makeText(SignUpActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                    finish();
                                 }
-                            });
-                        }
-                        else {
-                            Toast.makeText(SignUpActivity.this, "Failed to sign up. Try again!", Toast.LENGTH_LONG).show();
-                        }
+                                else {
+                                    Toast.makeText(SignUpActivity.this, "Failed to sign up. Try again!", Toast.LENGTH_LONG).show();
+                                    edtPassword.setText("");
+                                    edtRePassword.setText("");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        Toast.makeText(SignUpActivity.this, "Failed to sign up. Try again!", Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -135,7 +130,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             edtRePassword.setError("Confirm password is required");
             edtRePassword.requestFocus();
         }
-        //Check valid contents.
         if (!Patterns.EMAIL_ADDRESS.matcher(edtEmail.getText()).matches()) {
             edtEmail.setError("Please provide valid email.");
             edtEmail.requestFocus();

@@ -2,9 +2,8 @@ package com.jaykit.minimal.ui.user;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,13 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,9 +29,6 @@ import com.jaykit.minimal.LoginActivity;
 import com.jaykit.minimal.R;
 
 import org.jetbrains.annotations.NotNull;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
 
@@ -82,6 +75,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         // TODO: Use the ViewModel
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch ( view.getId() ) {
@@ -89,21 +83,21 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 logout();
                 break;
             case R.id.btnChangePwd:
-                changePassword(view);
+                changePassword();
                 break;
         }
     }
 
     private void logout() {
         FirebaseAuth.getInstance().signOut();
-        getActivity().finish();
+        requireActivity().finish();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
 
 
     }
 
-    private void changePassword(View view) {
+    private void changePassword() {
         startActivity( new Intent(getActivity(), ChangePassword.class));
     }
 

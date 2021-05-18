@@ -1,10 +1,8 @@
 package com.jaykit.minimal.api;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,11 +12,9 @@ import android.app.Service;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 
 public class GPSTracker extends Service implements LocationListener {
@@ -93,6 +89,7 @@ public class GPSTracker extends Service implements LocationListener {
                 // If GPS enabled, get latitude/longitude using GPS Services
                 if (isNetworkEnabled) {
 
+                    assert locationManager != null;
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
@@ -151,18 +148,12 @@ public class GPSTracker extends Service implements LocationListener {
 
         alertDialog.setTitle("GPS is not Enabled!");
         alertDialog.setMessage("Do you want to turn on GPS?");
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            mContext.startActivity(intent);
         });
 
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        alertDialog.setNegativeButton("No", (dialog, which) -> dialog.cancel());
         alertDialog.show();
     }
 

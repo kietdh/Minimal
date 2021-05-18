@@ -1,7 +1,5 @@
 package com.jaykit.minimal;
 
-import androidx.annotation.LongDef;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -12,20 +10,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.jetbrains.annotations.NotNull;
 
 public class ChangePassword extends AppCompatActivity implements View.OnClickListener {
 
@@ -89,19 +77,11 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
         if (user != null && user.getEmail() != null) {
             AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), edtVerifyNewPwd.getText().toString());
 
-            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<Void> task) {
-                    Toast.makeText(ChangePassword.this, "Change password successfully", Toast.LENGTH_LONG).show();
-                    finish();
-                }
+            user.reauthenticate(credential).addOnCompleteListener(task -> {
+                Toast.makeText(ChangePassword.this, "Change password successfully", Toast.LENGTH_LONG).show();
+                finish();
             });
-            user.updatePassword(edtVerifyNewPwd.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<Void> task) {
-                    Log.d("ChangePassword: ", "Successfully change password");
-                }
-            });
+            user.updatePassword(edtVerifyNewPwd.getText().toString()).addOnCompleteListener(task -> Log.d("ChangePassword: ", "Successfully change password"));
         } else {
             Toast.makeText(ChangePassword.this, "Failed to change password!", Toast.LENGTH_LONG).show();
             edtOldPwd.setText("");

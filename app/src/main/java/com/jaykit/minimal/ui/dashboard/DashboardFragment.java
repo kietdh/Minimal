@@ -1,15 +1,7 @@
 package com.jaykit.minimal.ui.dashboard;
 
-import android.Manifest;
+
 import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -31,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jaykit.minimal.MainActivity;
 import com.jaykit.minimal.R;
 
 import java.util.Objects;
@@ -148,9 +135,9 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String index_temperature = snapshot.child("temperature").getValue().toString();
-                String index_humidity    = snapshot.child("humidity").getValue().toString();
-                String index_gas         = snapshot.child("gas").getValue().toString();
+                String index_temperature = Objects.requireNonNull(snapshot.child("temperature").getValue()).toString();
+                String index_humidity    = Objects.requireNonNull(snapshot.child("humidity").getValue()).toString();
+                String index_gas         = Objects.requireNonNull(snapshot.child("gas").getValue()).toString();
 
                 temperature = index_temperature;
                 humidity    = index_humidity;
@@ -199,22 +186,22 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String status_light_bulb        = snapshot.child("light_bulb").getValue().toString();
-                String status_air_conditioner   = snapshot.child("air_conditioner").getValue().toString();
-                String status_fan               = snapshot.child("fan").getValue().toString();
-                String status_light             = snapshot.child("light").getValue().toString();
-                String status_outlet            = snapshot.child("outlet").getValue().toString();
-                String status_top_fan           = snapshot.child("top_fan").getValue().toString();
-                String status_top_light         = snapshot.child("top_light").getValue().toString();
-                String status_top_light_bulb    = snapshot.child("top_light_bulb").getValue().toString();
-                String status_device_1          = snapshot.child("device_1").getValue().toString();
-                String status_device_2          = snapshot.child("device_2").getValue().toString();
-                String status_device_3          = snapshot.child("device_3").getValue().toString();
-                String status_device_4          = snapshot.child("device_4").getValue().toString();
-                String status_device_5          = snapshot.child("device_5").getValue().toString();
-                String status_device_6          = snapshot.child("device_6").getValue().toString();
-                String status_device_7          = snapshot.child("device_7").getValue().toString();
-                String status_device_8          = snapshot.child("device_8").getValue().toString();
+                String status_light_bulb        = Objects.requireNonNull(snapshot.child("light_bulb").getValue()).toString();
+                String status_air_conditioner   = Objects.requireNonNull(snapshot.child("air_conditioner").getValue()).toString();
+                String status_fan               = Objects.requireNonNull(snapshot.child("fan").getValue()).toString();
+                String status_light             = Objects.requireNonNull(snapshot.child("light").getValue()).toString();
+                String status_outlet            = Objects.requireNonNull(snapshot.child("outlet").getValue()).toString();
+                String status_top_fan           = Objects.requireNonNull(snapshot.child("top_fan").getValue()).toString();
+                String status_top_light         = Objects.requireNonNull(snapshot.child("top_light").getValue()).toString();
+                String status_top_light_bulb    = Objects.requireNonNull(snapshot.child("top_light_bulb").getValue()).toString();
+                String status_device_1          = Objects.requireNonNull(snapshot.child("device_1").getValue()).toString();
+                String status_device_2          = Objects.requireNonNull(snapshot.child("device_2").getValue()).toString();
+                String status_device_3          = Objects.requireNonNull(snapshot.child("device_3").getValue()).toString();
+                String status_device_4          = Objects.requireNonNull(snapshot.child("device_4").getValue()).toString();
+                String status_device_5          = Objects.requireNonNull(snapshot.child("device_5").getValue()).toString();
+                String status_device_6          = Objects.requireNonNull(snapshot.child("device_6").getValue()).toString();
+                String status_device_7          = Objects.requireNonNull(snapshot.child("device_7").getValue()).toString();
+                String status_device_8          = Objects.requireNonNull(snapshot.child("device_8").getValue()).toString();
 
                 light_bulb          = Integer.parseInt(status_light_bulb);
                 air_conditioner     = Integer.parseInt(status_air_conditioner);
@@ -262,6 +249,7 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch ( view.getId() ) {

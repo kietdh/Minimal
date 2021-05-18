@@ -1,6 +1,5 @@
 package com.jaykit.minimal;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -13,9 +12,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
@@ -70,17 +66,13 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             return;
         }
 
-        mAuth.sendPasswordResetEmail(edtEmail.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<Void>() {
-
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
-                    Toast.makeText(ForgotPasswordActivity.this, "Reset email has been sent to your email!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
-                }
-                else {
-                    Toast.makeText(ForgotPasswordActivity.this, "Failed to reset password!", Toast.LENGTH_LONG).show();
-                }
+        mAuth.sendPasswordResetEmail(edtEmail.getText().toString()).addOnCompleteListener(this, task -> {
+            if(task.isSuccessful()) {
+                Toast.makeText(ForgotPasswordActivity.this, "Reset email has been sent to your email!", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
+            }
+            else {
+                Toast.makeText(ForgotPasswordActivity.this, "Failed to reset password!", Toast.LENGTH_LONG).show();
             }
         });
     }

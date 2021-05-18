@@ -285,4 +285,10 @@ public class HomeFragment extends Fragment {
         super.onDestroy();
         gps.stopListener();
     }
+
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        gps.stopUsingGPS();
+//    }
 }
