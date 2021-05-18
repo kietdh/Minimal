@@ -11,6 +11,9 @@
     <string name="sample">kk</string>
     <string name="darksky">Powered by Dark Sky</string>
     <string name="changepwd">Change Password</string>
+    <string name="title_location_permission">Allow location permission?</string>
+    <string name="text_location_permission">This app need to access your location to get forecast status.</string>
+    <string name="ok">OK</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.
