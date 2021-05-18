@@ -3,14 +3,8 @@ package com.jaykit.minimal.ui.home;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,10 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,8 +27,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jaykit.minimal.LoginActivity;
-import com.jaykit.minimal.MainActivity;
 import com.jaykit.minimal.R;
 import com.jaykit.minimal.api.Darksky;
 import com.jaykit.minimal.api.Forecast;
@@ -59,7 +49,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 public class HomeFragment extends Fragment {
 
     private ArrayList<Object> permissionToRequest;
-    private final ArrayList permissionRejected = new ArrayList();
+    private final ArrayList<String> permissionRejected = new ArrayList<>();
     private final ArrayList<String> permissions = new ArrayList<>();
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
@@ -108,7 +98,7 @@ public class HomeFragment extends Fragment {
         permissionToRequest = findUnAskedPermissions(permissions);
 
         if ( permissionToRequest.size() > 0 ) {
-            requestPermissions((String[]) permissionToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
+            requestPermissions(permissionToRequest.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
         }
         gps = new GPSTracker(getContext());
 
@@ -126,10 +116,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
+        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
         });
 
         setWelcomeTitle();
@@ -141,7 +128,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         setUsername();
         getForecast();
-        boolean aclPermission = (ContextCompat.checkSelfPermission(getContext(),
+        boolean aclPermission = (ContextCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
         if (!aclPermission) {
             ActivityCompat.requestPermissions(requireActivity(),
@@ -149,7 +136,7 @@ public class HomeFragment extends Fragment {
                     1);
         }
 
-        boolean aflPermission = (ContextCompat.checkSelfPermission(getContext(),
+        boolean aflPermission = (ContextCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
         if (!aflPermission) {
             ActivityCompat.requestPermissions(requireActivity(),
@@ -241,7 +228,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Log.e("ERROR: ", "LOI KHONG THE GET API");
-                Log.e("darksky error: ", String.valueOf(statusCode) + error.getMessage());
+                Log.e("darksky error: ", statusCode + error.getMessage());
             }
         };
         darksky.getCurrentForecast(handler);
@@ -260,10 +247,11 @@ public class HomeFragment extends Fragment {
     }
     private boolean hasPermission(String permission) {
         if (canMakeSmores()) {
-            return (getContext().checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED);
+            return (requireContext().checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED);
         }
         return false;
     }
+
     private boolean canMakeSmores() {
         return true;
     }
@@ -271,25 +259,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case ALL_PERMISSIONS_RESULT:
-                for (Object perms : permissionToRequest) {
-                    if (hasPermission((String) perms))
-                        permissionRejected.add(perms);
+        if (requestCode == ALL_PERMISSIONS_RESULT) {
+            for (Object perms : permissionToRequest) {
+                if (hasPermission((String) perms))
+                    permissionRejected.add((String) perms);
+            }
+            if (permissionRejected.size() > 0) {
+                if (shouldShowRequestPermissionRationale(permissionRejected.get(0))) {
+                    showMessageOKCancel((dialog, which) -> requestPermissions(permissionRejected.toArray(new String[0]), ALL_PERMISSIONS_RESULT));
                 }
-                if ( permissionRejected.size() > 0 ) {
-                    if (shouldShowRequestPermissionRationale((String) permissionRejected.get(0))) {
-                        showMessageOKCancel(
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        requestPermissions((String[]) permissionRejected.toArray(new String[0]), ALL_PERMISSIONS_RESULT);
-                                    }
-                                });
-                        return;
-                    }
-                    break;
-                }
+            }
         }
     }
     private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
