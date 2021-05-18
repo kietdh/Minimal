@@ -5,7 +5,6 @@ public class Darksky {
     public final static String API_KEY = "b79f77b723cbd0322d9ea222d1f95cb5";
     public final static String BASE_URL = "https://api.forecast.io/forecast/";
 
-    // Location data
     public double latitude;
     public double longitude;
 
