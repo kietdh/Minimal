@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Sensors widget -->>
+    <!-- Sensors widget -->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView3"
@@ -363,7 +363,7 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/add"
+                    android:src="@drawable/light_bulb"
                     android:layout_margin="16dp"/>
 
             </com.google.android.material.card.MaterialCardView>
@@ -385,7 +385,7 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/add"
+                    android:src="@drawable/light_bulb"
                     android:layout_margin="16dp"/>
 
             </com.google.android.material.card.MaterialCardView>
@@ -407,7 +407,7 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/add"
+                    android:src="@drawable/light_bulb"
                     android:layout_margin="16dp"/>
 
             </com.google.android.material.card.MaterialCardView>

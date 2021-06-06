@@ -423,9 +423,4 @@ public class DashboardFragment extends Fragment  implements View.OnClickListener
                 btnDevice_16.setCardBackgroundColor(getActivity().getResources().getColor(R.color.light_card));
         }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }
