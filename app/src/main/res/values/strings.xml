@@ -54,7 +54,7 @@
     <string name="good_night">Good night, </string>
     <string name="copyright">Copyright by Jay Kit</string>
     <string name="thank">Thank you for using, hope you will have a great experience with this application.
-This product is part of my graduation project, thanks to my family, teachers, and friends for always supporting and helping me complete this product as best as possible.</string>
+This product is a part of my graduation project. Thanks to my family, teachers, and friends for always supporting and helping me complete this product as best as possible.</string>
     <string name="symbol">----------------------------------</string>
     <!-- This string used for Fragment title -->
     <string name="dashboard">Dashboard</string>
