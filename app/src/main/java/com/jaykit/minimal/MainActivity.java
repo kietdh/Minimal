@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String HOME_CHILD = "Home";
     private static final String MAC_CHILD = "24:62:AB:F9:22:0C";
     private static final String SENSOR_CHILD = "Sensor";
-    int fire = 0;
+    int gas = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +73,13 @@ public class MainActivity extends AppCompatActivity {
         mSensorReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                String fire_index = Objects.requireNonNull(snapshot.child("fire").getValue()).toString();
+                String gas_index = Objects.requireNonNull(snapshot.child("gas").getValue()).toString();
 
-                fire = Integer.parseInt(fire_index);
+                gas = Integer.parseInt(gas_index);
 
-                if ( fire == 1 ) {
+                if ( gas == 1 ) {
                     createNotificationChannel();
-                    String message = "SOS, FIRE detected.";
+                    String message = "SOS, Gas detected.";
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_launcher_background)
                             .setContentTitle("Minimal")
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String description = "test notification";
+            String description = "Gas detected, please hurry up check your home!";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
             channel.setDescription(description);
